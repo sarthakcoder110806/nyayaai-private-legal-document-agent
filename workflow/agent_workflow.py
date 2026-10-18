@@ -1,9 +1,35 @@
+import re
+
 from core.document_loader import extract_pdf_pages
 from core.chunker import chunk_pages
 from core.retriever import DocumentRetriever
 from core.verifier import verify_evidence
 
 from agents.explanation_agent import explain_document
+from workflow.summary_workflow import summarize_pdf
+
+
+# Words that mean "give me a summary of the whole document".
+_SUMMARY_PATTERN = re.compile(
+    r"\b("
+    r"summar(?:y|ise|ize|ised|ized|ising|izing)"
+    r"|overview"
+    r"|tl;?dr"
+    r"|gist"
+    r"|key\s+(?:points|takeaways|terms)"
+    r"|main\s+points"
+    r"|brief\s+me"
+    r")\b",
+    re.IGNORECASE,
+)
+
+
+def is_summary_request(question: str) -> bool:
+    """True for short requests like 'summarise', 'give me an overview',
+    'key points'. Long, specific questions go to normal question answering,
+    e.g. 'what does the termination clause say, in summary?'."""
+    text = (question or "").strip()
+    return bool(_SUMMARY_PATTERN.search(text)) and len(text.split()) <= 10
 
 
 def build_response(
@@ -44,6 +70,10 @@ def answer_document_question(
     # Step 1: Validate the question
     if not question or not question.strip():
         return insufficient_evidence("Please enter a question.")
+
+    # Step 1b: "summarise" style requests get the document summary
+    if is_summary_request(question):
+        return summarize_pdf(pdf_bytes)
 
     # Step 2: Extract text from the PDF
     try:

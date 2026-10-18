@@ -1,7 +1,6 @@
 import pymupdf
 
 
-
 def extract_pdf_pages(pdf_bytes: bytes) -> list[dict]:
     """
     Extract text from a PDF while preserving page numbers.
