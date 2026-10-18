@@ -1,0 +1,32 @@
+SAMPLE RENTAL AGREEMENT
+
+This is a fictional agreement created for software testing.
+
+1. PARTIES
+
+The landlord is Alex Sharma.
+The tenant is Jordan Verma.
+
+2. MONTHLY RENT
+
+The tenant shall pay monthly rent of INR 12,000.
+Rent must be paid on or before the 5th day of each month.
+
+3. SECURITY DEPOSIT
+
+The tenant shall pay a security deposit of INR 24,000.
+
+4. PROPERTY MAINTENANCE
+
+The tenant is responsible for keeping the premises clean.
+
+5. TERMINATION
+
+Either party may terminate this agreement by providing
+30 days' written notice.
+
+6. LATE PAYMENT
+
+This sample agreement does not specify a late-payment penalty.
+
+
